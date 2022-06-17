@@ -2,11 +2,13 @@ package com.mustakim.springBoot.practice.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mustakim.springBoot.practice.entity.Department;
+import com.mustakim.springBoot.practice.error.DepartmentNotFoundException;
 import com.mustakim.springBoot.practice.repository.DepartmentRepository;
 
 @Service
@@ -26,8 +28,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public Department fetchDepartmentById(Long departmentId) {
-		return departmentRepository.findById(departmentId).get();
+	public Department fetchDepartmentById(Long departmentId) throws DepartmentNotFoundException {
+		
+		Optional<Department> department = departmentRepository.findById(departmentId);
+		
+		if(!department.isPresent()) {
+			throw new DepartmentNotFoundException("Department not found for id: "+departmentId);
+		}
+		
+		return department.get();
 	}
 
 	@Override
