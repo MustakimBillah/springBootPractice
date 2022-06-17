@@ -2,6 +2,8 @@ package com.mustakim.springBoot.practice.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class DepartmentController {
 	private DepartmentService departmentService;
 	
 	@PostMapping("/saveDepartment")
-	public Department saveDepartment(@RequestBody Department department) {
+	public Department saveDepartment(@Valid @RequestBody Department department) {
 		return departmentService.saveDepartment(department);
 	}
 	
